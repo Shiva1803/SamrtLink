@@ -1,5 +1,5 @@
 
-  # Smartify
+  # SmartLink
 
   The figma link for the frontend is at https://www.figma.com/design/28WOPKgyyBFmQYFvAHVoDa/Minimalist-SaaS-Landing-Page.
 
