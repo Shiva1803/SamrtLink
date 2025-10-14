@@ -1,7 +1,7 @@
 
-  # Minimalist SaaS Landing Page
+  # Smartify
 
-  This is a code bundle for Minimalist SaaS Landing Page. The original project is available at https://www.figma.com/design/28WOPKgyyBFmQYFvAHVoDa/Minimalist-SaaS-Landing-Page.
+  The figma link for the frontend is at https://www.figma.com/design/28WOPKgyyBFmQYFvAHVoDa/Minimalist-SaaS-Landing-Page.
 
   ## Running the code
 
