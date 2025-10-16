@@ -3,13 +3,13 @@ import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { Checkbox } from '../components/ui/checkbox';
-import { Link2 } from 'lucide-react';
+import { Link2, Shield } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { useAuth } from '@/hooks/useAuth';
 import type { FormEvent, ChangeEvent } from 'react';
 
-export function SignIn() {
+export function SignIn({ onNavigate }: { onNavigate: (page: string) => void }) {
   const { signIn, isLoading, isAuthenticated } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
@@ -232,14 +232,30 @@ export function SignIn() {
             Don't have an account?{' '}
             <button
               type="button"
-              onClick={() => window.dispatchEvent(new CustomEvent('navigate', { detail: 'signup' }))}
+              onClick={() => onNavigate('signup')}
               className="text-black hover:underline"
             >
               Sign up
             </button>
           </p>
         </motion.div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="text-center mt-8"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-neutral-100 border border-neutral-200 hover:border-neutral-300 transition-all group cursor-pointer"
+            onClick={() => onNavigate('admin-login')}
+          >
+            <Shield className="w-4 h-4 text-neutral-600 group-hover:text-neutral-900 transition-colors" />
+            <span className="text-xs text-neutral-600 group-hover:text-neutral-900 transition-colors">
+              Administrator Access
+            </span>
+          </div>
+        </motion.div>
       </div>
     </motion.div>
   );
 }
+

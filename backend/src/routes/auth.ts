@@ -39,6 +39,7 @@ router.post("/signup", async (req, res) => {
         _id: user._id.toString(), // Also include _id for compatibility
         name: user.name,
         email: user.email,
+        role: user.role, // Include the user's role
       },
     });
   } catch (error) {
@@ -83,6 +84,7 @@ router.post("/signin", async (req, res) => {
         _id: user._id.toString(), // Also include _id for compatibility
         name: user.name,
         email: user.email,
+        role: user.role, // Include the user's role
       },
     });
   } catch (error) {

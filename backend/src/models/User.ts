@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
   passwordHash: String,
   bio: String,
   socialLinks: Object,
+  role: { type: String, enum: ['user', 'admin'], default: 'user' },
 }, { timestamps: true });
 
 export const User = mongoose.model("User", userSchema);

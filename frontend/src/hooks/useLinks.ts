@@ -4,11 +4,13 @@ import { linkService } from '@/features/links/services/link.service';
 import type { Link, CreateLinkRequest, UpdateLinkRequest } from '@/types/link.types';
 import { toast } from 'sonner';
 import { MESSAGES } from '@/config/constants';
+import { useAuth } from './useAuth'; // Import useAuth
 
 export function useLinks() {
   const [links, setLinks] = useState<Link[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { isAuthenticated } = useAuth(); // Get isAuthenticated from useAuth
 
   const fetchLinks = useCallback(async () => {
     setIsLoading(true);
@@ -78,8 +80,10 @@ export function useLinks() {
   }, [fetchLinks]);
 
   useEffect(() => {
-    fetchLinks();
-  }, [fetchLinks]);
+    if (isAuthenticated) {
+      fetchLinks();
+    }
+  }, [fetchLinks, isAuthenticated]); // Add isAuthenticated to dependency array
 
   return {
     links,

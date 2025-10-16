@@ -7,6 +7,7 @@ import linkRoutes from "./routes/links";
 import analyticsRoutes from "./routes/analytics";
 import ingestRoutes from "./routes/ingest";
 import chatRoutes from "./routes/chat";
+import adminRoutes from "./routes/admin";
 
 // Load environment variables FIRST
 dotenv.config();
@@ -32,6 +33,7 @@ app.use("/api/links", linkRoutes);
 app.use("/api/analytics", analyticsRoutes);
 app.use("/api/ingest", ingestRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/admin", adminRoutes);
 
 // Public redirect endpoint - must be after API routes
 app.get('/:shortCode', async (req, res) => {

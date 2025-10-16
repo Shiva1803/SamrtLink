@@ -1,19 +1,11 @@
 // Link Management Types
 export interface Link {
-  _id: string;  // MongoDB uses _id, not id
-  id?: string;  // Optional for compatibility
-  userId: string;
+  _id: string;
+  userId: User; // Change from string to User object
   originalUrl: string;
-  shortUrl?: string;
   shortCode: string;
-  customAlias?: string;
-  customSlug?: string;
-  qrCode?: string;
   title?: string;
-  description?: string;
   clicks: number;
-  isActive: boolean;
-  expiresAt?: Date;
   createdAt: Date;
   updatedAt: Date;
 }

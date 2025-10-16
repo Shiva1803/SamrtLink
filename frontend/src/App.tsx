@@ -13,6 +13,8 @@ import { Contact as ContactPage } from './pages/Contact';
 // Auth pages
 import { SignIn as SignInPage } from './pages/SignIn';
 import { SignUp as SignUpPage } from './pages/SignUp';
+import { AdminLogin } from './pages/AdminLogin';
+import { Admin } from './pages/Admin';
 
 // Dashboard - Single unified version
 import { Dashboard } from './pages/DashboardUnified';
@@ -25,6 +27,7 @@ import { Toaster } from './components/ui/sonner';
 // Hooks and utils
 import { useEffect, useState } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
+// import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { ROUTES } from '@/config/constants';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
@@ -33,6 +36,8 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState(ROUTES.HOME);
   const { scrollYProgress } = useScroll();
   const { user, isAuthenticated, logout } = useAuth();
+  // const navigate = useNavigate();
+  // const location = useLocation(); // Get current location
 
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -109,13 +114,13 @@ export default function App() {
         if (!isAuthenticated) {
           toast.error('Please sign in to access the dashboard');
           setCurrentPage(ROUTES.SIGN_IN);
-          return <SignInPage />;
+          return <SignInPage onNavigate={handleNavigation} />;
         }
         return <Dashboard onNavigate={handleNavigation} onLogout={handleLogout} />;
       case ROUTES.SETTINGS:
         if (!isAuthenticated) {
           setCurrentPage(ROUTES.SIGN_IN);
-          return <SignInPage />;
+          return <SignInPage onNavigate={handleNavigation} />;
         }
         return <SettingsPage />;
       case ROUTES.PROFILE:
@@ -126,7 +131,7 @@ export default function App() {
           setCurrentPage(ROUTES.DASHBOARD);
           return <Dashboard onNavigate={handleNavigation} onLogout={handleLogout} />;
         }
-        return <SignInPage />;
+        return <SignInPage onNavigate={handleNavigation} />;
       case ROUTES.SIGN_UP:
         // Redirect to dashboard if already authenticated
         if (isAuthenticated) {
@@ -134,14 +139,25 @@ export default function App() {
           return <Dashboard onNavigate={handleNavigation} onLogout={handleLogout} />;
         }
         return <SignUpPage />;
+      // --- Add Admin Routes ---
+      case ROUTES.ADMIN_LOGIN:
+        return <AdminLogin onNavigate={handleNavigation} />;
+      case ROUTES.ADMIN:
+        // Protect the admin route
+        if (!isAuthenticated || user?.role !== 'admin') {
+          toast.error('Administrator access required.');
+          setCurrentPage(ROUTES.ADMIN_LOGIN);
+          return <AdminLogin onNavigate={handleNavigation} />;
+        }
+        return <Admin onNavigate={handleNavigation} />;
       default:
         return <HomePage />;
     }
   };
 
   // Hide footer on auth, dashboard, settings, and profile pages
-  const hideFooter = [ROUTES.SIGN_IN, ROUTES.SIGN_UP, ROUTES.DASHBOARD, ROUTES.SETTINGS, ROUTES.PROFILE].includes(currentPage);
-  const hideNavigation = currentPage === ROUTES.DASHBOARD;
+  const hideFooter = [ROUTES.SIGN_IN, ROUTES.SIGN_UP, ROUTES.DASHBOARD, ROUTES.SETTINGS, ROUTES.PROFILE, ROUTES.ADMIN, ROUTES.ADMIN_LOGIN].includes(currentPage);
+  const hideNavigation = [ROUTES.DASHBOARD, ROUTES.ADMIN, ROUTES.ADMIN_LOGIN].includes(currentPage);
 
   return (
     <div className="min-h-screen bg-white relative">
@@ -196,7 +212,7 @@ export default function App() {
       )}
 
       {/* Main content with page transitions */}
-      <PageTransition>
+      <PageTransition page={currentPage}>
         <main>
           {renderPage()}
         </main>
@@ -210,3 +226,12 @@ export default function App() {
     </div>
   );
 }
+
+// export function WrappedApp() {
+//   return (
+//     <Router>
+//       <App />
+//     </Router>
+//   );
+// }
+

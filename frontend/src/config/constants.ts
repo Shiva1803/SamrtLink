@@ -12,6 +12,8 @@ export const ROUTES = {
   DASHBOARD: 'dashboard',
   SETTINGS: 'settings',
   PROFILE: 'profile',
+  ADMIN_LOGIN: 'admin-login',
+  ADMIN: 'admin',
 } as const;
 
 export const STORAGE_KEYS = {

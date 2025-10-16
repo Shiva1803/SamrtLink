@@ -1,10 +1,12 @@
 // Authentication Types
 export interface User {
   id: string;
+  _id: string; // Add this line for compatibility with backend _id
   name: string;
   email: string;
   avatar?: string;
-  createdAt: Date;
+  role: 'user' | 'admin';
+  createdAt: string;
 }
 
 export interface SignInCredentials {

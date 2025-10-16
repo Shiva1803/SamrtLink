@@ -24,6 +24,10 @@ export const API_CONFIG = {
     CHAT_MESSAGE: '/api/chat',
     // Legacy chat by userId
     CHAT: (userId: string) => `/api/chat/${userId}`,
+    
+    // --- Add Admin Endpoints ---
+    ADMIN_USERS: '/api/admin/users',
+    ADMIN_USER_DETAIL: (id: string) => `/api/admin/users/${id}`,
   },
   TIMEOUT: 10000,
 };
