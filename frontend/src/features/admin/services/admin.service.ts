@@ -32,4 +32,11 @@ export const adminService = {
   async getUserDetails(userId: string): Promise<AdminUserDetail> {
     return apiClient.get<AdminUserDetail>(`/api/admin/users/${userId}`, true);
   },
+
+  /**
+   * Updates a user's role. Requires admin authentication.
+   */
+  async updateUserRole(userId: string, role: 'user' | 'admin'): Promise<User> {
+    return apiClient.put<User>(`/api/admin/users/${userId}/role`, { role }, true);
+  },
 };

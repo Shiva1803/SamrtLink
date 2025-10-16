@@ -110,6 +110,17 @@ export function Admin({ onNavigate }: AdminProps = {}) {
   const handleSuspendUser = (userId: string) => toast.warning(`Suspend action triggered for user ${userId}. (Not implemented)`);
   const handleDeleteUser = (userId: string) => toast.error(`Delete action triggered for user ${userId}. (Not implemented)`);
 
+  const handleUpdateUserRole = async (userId: string, newRole: 'user' | 'admin') => {
+    const loadingToastId = toast.loading(`Updating user ${userId} to ${newRole} role...`);
+    try {
+      const updatedUser = await adminService.updateUserRole(userId, newRole);
+      setUsers(prevUsers => prevUsers.map(u => u._id === userId ? { ...u, role: updatedUser.role } : u));
+      toast.success(`User ${updatedUser.name} is now a ${updatedUser.role}.`, { id: loadingToastId });
+    } catch (error) {
+      toast.error("Failed to update user role.", { id: loadingToastId });
+    }
+  };
+
   const handleLogout = () => {
     logout();
     if (onNavigate) onNavigate('home');
@@ -168,11 +179,17 @@ export function Admin({ onNavigate }: AdminProps = {}) {
                             <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
                             <TableCell className="text-right">
                                 <DropdownMenu>
-                                    <DropdownMenuTrigger asChild><Button variant="ghost" size="icon"><MoreVertical className="w-4 h-4" /></Button></DropdownMenuTrigger>
+                                    <DropdownMenuTrigger asChild><Button variant="ghost" size="icon" className="p-2"><MoreVertical className="w-4 h-4" /></Button></DropdownMenuTrigger>
                                     <DropdownMenuContent align="end">
                                         <DropdownMenuItem onClick={() => handleViewUser(user._id)}><Eye className="w-4 h-4 mr-2" />View Details</DropdownMenuItem>
                                         <DropdownMenuItem onClick={() => handleSuspendUser(user._id)}><Ban className="w-4 h-4 mr-2" />Suspend User</DropdownMenuItem>
                                         <DropdownMenuItem onClick={() => handleDeleteUser(user._id)} className="text-red-600"><Trash2 className="w-4 h-4 mr-2" />Delete User</DropdownMenuItem>
+                                        {user.role === 'user' && (
+                                          <DropdownMenuItem onClick={() => handleUpdateUserRole(user._id, 'admin')} className="text-green-600"><Shield className="w-4 h-4 mr-2" />Make Admin</DropdownMenuItem>
+                                        )}
+                                        {user.role === 'admin' && (
+                                          <DropdownMenuItem onClick={() => handleUpdateUserRole(user._id, 'user')}><Users className="w-4 h-4 mr-2" />Make User</DropdownMenuItem>
+                                        )}
                                     </DropdownMenuContent>
                                 </DropdownMenu>
                             </TableCell>

@@ -58,4 +58,30 @@ router.get('/links', async (req, res) => {
   }
 });
 
+/**
+ * @route   PUT /api/admin/users/:id/role
+ * @desc    Update a user's role (user/admin)
+ * @access  Admin
+ */
+router.put('/users/:id/role', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { role } = req.body;
+
+    if (!['user', 'admin'].includes(role)) {
+      return res.status(400).json({ message: 'Invalid role specified. Must be \'user\' or \'admin\'.' });
+    }
+
+    const user = await User.findByIdAndUpdate(id, { role }, { new: true, select: '-passwordHash' });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: 'Failed to update user role', error });
+  }
+});
+
 export default router;
