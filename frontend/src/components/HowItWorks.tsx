@@ -5,29 +5,9 @@ import { ParallaxSection } from './ParallaxSection';
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { HOW_IT_WORKS } from '../data/marketing';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const steps = [
-  {
-    number: '01',
-    title: 'Paste Your Link',
-    description: 'Simply paste any long URL into SmartLink. Our system processes it instantly.',
-    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb2ZmZWUlMjBsYXB0b3AlMjBtaW5pbWFsfGVufDF8fHx8MTc2MDExMDE1OHww&ixlib=rb-4.1.0&q=80&w=1080',
-  },
-  {
-    number: '02',
-    title: 'Customize & Brand',
-    description: 'Add your custom alias, choose your domain, and configure tracking parameters.',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhbmFseXRpY3MlMjBkYXNoYm9hcmQlMjBzY3JlZW58ZW58MXx8fHwxNzYwMTEwMTU4fDA&ixlib=rb-4.1.0&q=80&w=1080',
-  },
-  {
-    number: '03',
-    title: 'Share & Track',
-    description: 'Share your link and watch real-time analytics. Monitor and optimize performance.',
-    image: 'https://images.unsplash.com/photo-1556656793-08538906a9f8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2JpbGUlMjBwaG9uZSUyMGhhbmR8ZW58MXx8fHwxNzYwMTEwMTU4fDA&ixlib=rb-4.1.0&q=80&w=1080',
-  },
-];
 
 export function HowItWorks() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -40,7 +20,7 @@ export function HowItWorks() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      steps.forEach((_, index) => {
+      HOW_IT_WORKS.forEach((_, index) => {
         const timeline = gsap.timeline({
           scrollTrigger: {
             trigger: `.step-${index}`,
@@ -82,7 +62,7 @@ export function HowItWorks() {
     <section ref={sectionRef} id="how-it-works" className="py-24 md:py-32 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Section Header */}
-        <motion.div 
+        <motion.div
           className="text-center max-w-3xl mx-auto mb-20"
           style={{ scale }}
         >
@@ -109,7 +89,7 @@ export function HowItWorks() {
 
         {/* Steps */}
         <div className="space-y-32">
-          {steps.map((step, index) => (
+          {HOW_IT_WORKS.map((step, index) => (
             <div
               key={step.number}
               className={`step-${index} grid lg:grid-cols-2 gap-12 items-center ${
@@ -120,7 +100,7 @@ export function HowItWorks() {
                 <div className="step-number inline-block px-4 py-2 bg-black text-white rounded-full text-sm">
                   Step {step.number}
                 </div>
-                
+
                 <div className="step-content">
                   <h3 className="text-3xl md:text-4xl text-neutral-900 mb-4">
                     {step.title}
@@ -130,8 +110,8 @@ export function HowItWorks() {
                     {step.description}
                   </p>
 
-                  {index === steps.length - 1 && (
-                    <motion.button 
+                  {index === HOW_IT_WORKS.length - 1 && (
+                    <motion.button
                       className="inline-flex items-center gap-2 text-neutral-900 mt-6 group"
                       whileHover={{ x: 10 }}
                     >
@@ -143,7 +123,7 @@ export function HowItWorks() {
               </div>
 
               <ParallaxSection speed={index % 2 === 0 ? 0.3 : -0.3} className={index % 2 === 1 ? 'lg:order-1' : ''}>
-                <motion.div 
+                <motion.div
                   className="step-image relative rounded-2xl overflow-hidden shadow-2xl shadow-neutral-200"
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.4 }}

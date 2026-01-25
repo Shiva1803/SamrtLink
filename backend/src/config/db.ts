@@ -40,7 +40,8 @@ export const connectDB = async () => {
     });
 
   } catch (err) {
-    console.error("❌ MongoDB connection failed:", err.message);
+    const message = err instanceof Error ? err.message : 'Unknown error';
+    console.error("❌ MongoDB connection failed:", message);
     console.log("⚠️  Server will continue without database");
     console.log("💡 To fix: Make sure MongoDB is running with 'brew services start mongodb-community'");
     isConnected = false;

@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { Button } from './ui/button';
 import { Link2, TrendingUp, Edit, Trash2, BarChart3, Copy } from 'lucide-react';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 interface LinkCardProps {
   id: number;
@@ -46,7 +46,7 @@ export function LinkCard({
             </div>
             <h3 className="text-neutral-900 truncate">{title}</h3>
           </div>
-          
+
           <div className="flex items-center gap-2 ml-10">
             <p className="text-sm text-neutral-500 truncate">{shortUrl}</p>
             <motion.button
@@ -81,7 +81,7 @@ export function LinkCard({
               <BarChart3 className="w-4 h-4" />
             </Button>
           </motion.div>
-          
+
           <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
             <Button
               size="sm"
@@ -92,7 +92,7 @@ export function LinkCard({
               <Edit className="w-4 h-4" />
             </Button>
           </motion.div>
-          
+
           <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
             <Button
               size="sm"

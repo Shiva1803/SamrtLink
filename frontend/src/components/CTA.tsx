@@ -5,6 +5,7 @@ import { ImageWithFallback } from './figma/ImageWithFallback';
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { CTA_CONTENT } from '../data/marketing';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -75,7 +76,7 @@ export function CTA() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.2 }}
               >
-                Ready to transform your link management?
+                {CTA_CONTENT.headline}
               </motion.h2>
 
               <motion.p
@@ -85,7 +86,7 @@ export function CTA() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
-                Join thousands of teams using SmartLink to streamline their workflows and boost performance.
+                {CTA_CONTENT.body}
               </motion.p>
 
               <motion.div
@@ -96,7 +97,7 @@ export function CTA() {
                 transition={{ duration: 0.6, delay: 0.4 }}
               >
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button 
+                  <Button
                     size="lg"
                     className="bg-white hover:bg-neutral-100 text-black px-8 h-14 group"
                   >
@@ -105,7 +106,7 @@ export function CTA() {
                   </Button>
                 </motion.div>
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <Button 
+                  <Button
                     size="lg"
                     variant="outline"
                     className="border-2 border-neutral-700 hover:border-neutral-600 text-white hover:bg-neutral-900 px-8 h-14"
@@ -122,9 +123,9 @@ export function CTA() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.5 }}
               >
-                <span>✓ No credit card required</span>
-                <span>✓ 14-day free trial</span>
-                <span>✓ Cancel anytime</span>
+                {CTA_CONTENT.proofPoints.map((point) => (
+                  <span key={point}>✓ {point}</span>
+                ))}
               </motion.div>
             </div>
 

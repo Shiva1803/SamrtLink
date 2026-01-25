@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { ScrollReveal } from '../components/ScrollReveal';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { Target, Users, Zap, Heart } from 'lucide-react';
+import { MARKET_INSIGHTS, USP_POINTS } from '../data/marketing';
 
 const values = [
   {
@@ -65,7 +66,7 @@ export function About() {
 
             <ScrollReveal delay={0.2}>
               <p className="text-xl text-neutral-600 leading-relaxed">
-                SmartLink was born from a simple idea: link management shouldn't be complicated. 
+                SmartLink was born from a simple idea: link management shouldn't be complicated.
                 We're building tools that help businesses connect with their audience more effectively.
               </p>
             </ScrollReveal>
@@ -109,6 +110,35 @@ export function About() {
         </div>
       </section>
 
+      {/* USP Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <ScrollReveal>
+            <h2 className="text-4xl md:text-5xl text-neutral-900 mb-16 text-center">
+              Why teams choose SmartLink
+            </h2>
+          </ScrollReveal>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {USP_POINTS.map((point, index) => (
+              <ScrollReveal key={point.title} delay={index * 0.1}>
+                <motion.div
+                  className="bg-neutral-50 rounded-2xl p-6 border border-neutral-200 h-full"
+                  whileHover={{ y: -6 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="w-12 h-12 rounded-xl bg-black flex items-center justify-center mb-4">
+                    <point.icon className="w-6 h-6 text-white" />
+                  </div>
+                  <h3 className="text-xl text-neutral-900 mb-2">{point.title}</h3>
+                  <p className="text-neutral-600">{point.description}</p>
+                </motion.div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Values Section */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -131,6 +161,35 @@ export function About() {
                   </div>
                   <h3 className="text-xl text-neutral-900 mb-3">{value.title}</h3>
                   <p className="text-neutral-600 leading-relaxed">{value.description}</p>
+                </motion.div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Market Insights */}
+      <section className="py-24 bg-neutral-50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <ScrollReveal>
+            <h2 className="text-4xl md:text-5xl text-neutral-900 mb-16 text-center">
+              Market insights
+            </h2>
+          </ScrollReveal>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {MARKET_INSIGHTS.map((insight, index) => (
+              <ScrollReveal key={insight.title} delay={index * 0.1}>
+                <motion.div
+                  className="bg-white rounded-2xl p-6 border border-neutral-200 h-full"
+                  whileHover={{ y: -8 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <h3 className="text-xl text-neutral-900 mb-3">{insight.title}</h3>
+                  <p className="text-neutral-600 leading-relaxed mb-4">{insight.summary}</p>
+                  {insight.metric && (
+                    <p className="text-sm text-neutral-500">{insight.metric}</p>
+                  )}
                 </motion.div>
               </ScrollReveal>
             ))}

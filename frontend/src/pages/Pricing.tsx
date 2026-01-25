@@ -3,7 +3,8 @@ import { ScrollReveal } from '../components/ScrollReveal';
 import { Button } from '../components/ui/button';
 import { Check } from 'lucide-react';
 import { useState } from 'react';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
+import { PRICING_MESSAGING } from '../data/marketing';
 
 const plans = [
   {
@@ -90,13 +91,13 @@ export function Pricing() {
           <div className="text-center max-w-4xl mx-auto">
             <ScrollReveal>
               <h1 className="text-5xl md:text-6xl lg:text-7xl text-neutral-900 mb-8 leading-tight">
-                Simple, transparent pricing
+                {PRICING_MESSAGING.headline}
               </h1>
             </ScrollReveal>
 
             <ScrollReveal delay={0.2}>
               <p className="text-xl text-neutral-600 leading-relaxed mb-12">
-                Choose the plan that fits your needs. All plans include a 14-day free trial.
+                {PRICING_MESSAGING.subheadline}
               </p>
             </ScrollReveal>
 
@@ -148,7 +149,7 @@ export function Pricing() {
                   <div className="mb-8">
                     <h3 className="text-2xl text-neutral-900 mb-2">{plan.name}</h3>
                     <p className="text-sm text-neutral-600 mb-6">{plan.description}</p>
-                    
+
                     <div className="flex items-baseline gap-2 mb-6">
                       <span className="text-5xl text-neutral-900">
                         ${isYearly ? plan.price.yearly : plan.price.monthly}
@@ -159,9 +160,9 @@ export function Pricing() {
                     </div>
 
                     <Button
-                      onClick={() => 
-                        plan.name === 'Enterprise' 
-                          ? handleContactSales() 
+                      onClick={() =>
+                        plan.name === 'Enterprise'
+                          ? handleContactSales()
                           : handleSubscribe(plan.name)
                       }
                       className={`w-full h-12 ${
@@ -282,7 +283,7 @@ export function Pricing() {
             </h2>
           </ScrollReveal>
 
-          <div className="space-y-8">
+        <div className="space-y-8">
             {[
               {
                 q: 'Can I change my plan later?',

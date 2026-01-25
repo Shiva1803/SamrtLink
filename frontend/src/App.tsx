@@ -32,8 +32,10 @@ import { ROUTES } from '@/config/constants';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
 
+const PAGES = Object.values(ROUTES);
+
 export default function App() {
-  const [currentPage, setCurrentPage] = useState(ROUTES.HOME);
+  const [currentPage, setCurrentPage] = useState<string>(ROUTES.HOME);
   const { scrollYProgress } = useScroll();
   const { user, isAuthenticated, logout } = useAuth();
   // const navigate = useNavigate();
@@ -54,6 +56,11 @@ export default function App() {
 
   // Handle navigation with authentication check
   const handleNavigation = (page: string) => {
+    if (!PAGES.includes(page)) {
+      setCurrentPage(ROUTES.HOME);
+      return;
+    }
+
     // Protect dashboard route
     if (page === ROUTES.DASHBOARD && !isAuthenticated) {
       toast.error('Please sign in to access the dashboard');
@@ -234,4 +241,3 @@ export default function App() {
 //     </Router>
 //   );
 // }
-

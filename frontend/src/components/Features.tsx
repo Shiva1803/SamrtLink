@@ -1,44 +1,11 @@
 import { motion } from 'motion/react';
-import { Link2, BarChart3, Shield, Zap, QrCode, Users } from 'lucide-react';
 import { ScrollReveal } from './ScrollReveal';
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { FEATURES } from '../data/marketing';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const features = [
-  {
-    icon: Link2,
-    title: 'Smart URL Shortening',
-    description: 'Create branded short links that are memorable and professional. Customize every link to match your brand.',
-  },
-  {
-    icon: BarChart3,
-    title: 'Advanced Analytics',
-    description: 'Track clicks, locations, devices, and referrers in real-time. Make data-driven decisions with detailed insights.',
-  },
-  {
-    icon: QrCode,
-    title: 'Dynamic QR Codes',
-    description: 'Generate scannable QR codes for your links. Perfect for print materials, packaging, and offline campaigns.',
-  },
-  {
-    icon: Shield,
-    title: 'Enterprise Security',
-    description: 'Bank-level encryption and spam protection. Your links and data are always safe and secure.',
-  },
-  {
-    icon: Zap,
-    title: 'Lightning Fast',
-    description: 'Global CDN ensures instant redirects anywhere in the world. Your audience never waits.',
-  },
-  {
-    icon: Users,
-    title: 'Team Collaboration',
-    description: 'Invite team members, set permissions, and work together seamlessly on link campaigns.',
-  },
-];
 
 export function Features() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -91,7 +58,7 @@ export function Features() {
 
         {/* Features Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
+          {FEATURES.map((feature) => (
             <motion.div
               key={feature.title}
               className="feature-card group opacity-0"
@@ -100,7 +67,7 @@ export function Features() {
             >
               <div className="h-full bg-white rounded-2xl p-8 border border-neutral-200 hover:border-neutral-300 hover:shadow-2xl transition-all duration-300">
                 {/* Icon */}
-                <motion.div 
+                <motion.div
                   className="w-14 h-14 rounded-xl bg-black flex items-center justify-center mb-6"
                   whileHover={{ rotate: 360, scale: 1.1 }}
                   transition={{ duration: 0.6 }}
@@ -117,6 +84,12 @@ export function Features() {
                 <p className="text-neutral-600 leading-relaxed">
                   {feature.description}
                 </p>
+
+                {feature.usp && (
+                  <p className="text-sm text-neutral-500 mt-4">
+                    {feature.usp}
+                  </p>
+                )}
               </div>
             </motion.div>
           ))}
