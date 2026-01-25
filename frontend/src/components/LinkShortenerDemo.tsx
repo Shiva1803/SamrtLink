@@ -3,7 +3,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Copy, Check, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 // PLACEHOLDER: Interactive demo component for link shortening
 export function LinkShortenerDemo() {
@@ -13,16 +13,16 @@ export function LinkShortenerDemo() {
   const [isProcessing, setIsProcessing] = useState(false);
 
   // PLACEHOLDER FUNCTION - Replace with actual API call
-  const handleShorten = async (e: React.FormEvent) => {
+  const handleShorten = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     if (!url) {
       toast.error('Please enter a URL');
       return;
     }
 
     setIsProcessing(true);
-    
+
     // Simulated API call delay
     setTimeout(() => {
       // PLACEHOLDER: Generate mock short URL
@@ -113,7 +113,6 @@ export function LinkShortenerDemo() {
       </form>
 
       <p className="text-center text-sm text-neutral-500 mt-6">
-        {/* PLACEHOLDER: Add actual feature info */}
         Try it out! This is a demo. Sign up to save and track your links.
       </p>
     </div>

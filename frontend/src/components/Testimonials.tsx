@@ -4,36 +4,9 @@ import { ScrollReveal } from './ScrollReveal';
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { TESTIMONIALS, TESTIMONIAL_STATS } from '../data/marketing';
 
 gsap.registerPlugin(ScrollTrigger);
-
-// ============================================
-// PLACEHOLDER DATA - Replace with API calls
-// TODO: Fetch from /api/testimonials
-// ============================================
-const testimonials = [
-  {
-    name: 'Sarah Johnson',
-    role: 'Marketing Director',
-    company: 'TechFlow Inc',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjB3b21hbiUyMHNtaWxpbmd8ZW58MXx8fHwxNzYwMTEwMTU5fDA&ixlib=rb-4.1.0&q=80&w=1080',
-    quote: 'SmartLink has transformed how we track our marketing campaigns. The analytics are incredibly detailed and the interface is intuitive.',
-  },
-  {
-    name: 'Michael Chen',
-    role: 'Founder & CEO',
-    company: 'Digital Ventures',
-    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMG1hbiUyMHBvcnRyYWl0fGVufDF8fHx8MTc2MDExMDE1OXww&ixlib=rb-4.1.0&q=80&w=1080',
-    quote: 'The best link management tool we\'ve ever used. Custom domains, QR codes, and real-time tracking all in one place.',
-  },
-  {
-    name: 'Emily Rodriguez',
-    role: 'Social Media Manager',
-    company: 'Creative Studio',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdGFydHVwJTIwdGVhbSUyMHdvcmtpbmd8ZW58MXx8fHwxNzYwMTEwMTU5fDA&ixlib=rb-4.1.0&q=80&w=1080',
-    quote: 'Managing links for multiple clients used to be chaos. SmartLink\'s team features have made everything so much easier.',
-  },
-];
 
 export function Testimonials() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -105,7 +78,7 @@ export function Testimonials() {
 
         {/* Testimonials Grid */}
         <div className="grid md:grid-cols-3 gap-8 perspective-1000">
-          {testimonials.map((testimonial, index) => (
+          {TESTIMONIALS.map((testimonial) => (
             <motion.div
               key={testimonial.name}
               className="testimonial-card bg-neutral-50 rounded-2xl p-8 border border-neutral-200 opacity-0"
@@ -114,12 +87,12 @@ export function Testimonials() {
             >
               {/* Quote */}
               <p className="text-lg text-neutral-700 leading-relaxed mb-8">
-                "{testimonial.quote}"
+                {testimonial.quote}
               </p>
 
               {/* Author */}
               <div className="flex items-center gap-4">
-                <motion.div 
+                <motion.div
                   className="w-12 h-12 rounded-full overflow-hidden ring-2 ring-neutral-200"
                   whileHover={{ scale: 1.1 }}
                 >
@@ -140,12 +113,7 @@ export function Testimonials() {
 
         {/* Stats */}
         <div className="stats-section grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 pt-20 border-t border-neutral-200">
-          {[
-            { value: '50,000+', label: 'Active Users' },
-            { value: '4.9/5', label: 'Average Rating' },
-            { value: '99.9%', label: 'Uptime' },
-            { value: '24/7', label: 'Support' },
-          ].map((stat, index) => (
+          {TESTIMONIAL_STATS.map((stat) => (
             <motion.div
               key={stat.label}
               className="stat-number text-center opacity-0"
@@ -153,6 +121,9 @@ export function Testimonials() {
             >
               <p className="text-4xl text-neutral-900 mb-2">{stat.value}</p>
               <p className="text-neutral-600">{stat.label}</p>
+              {stat.sublabel && (
+                <p className="text-xs text-neutral-400 mt-2">{stat.sublabel}</p>
+              )}
             </motion.div>
           ))}
         </div>

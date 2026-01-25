@@ -1,130 +1,95 @@
 import { motion } from 'motion/react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
-import { QrCode, Download, Palette } from 'lucide-react';
+import { Download, QrCode, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 // PLACEHOLDER: Interactive QR Code Generator Demo
 export function QRCodeDemo() {
   const [url, setUrl] = useState('');
-  const [qrGenerated, setQrGenerated] = useState(false);
-  const [selectedColor, setSelectedColor] = useState('#000000');
-
-  const colors = [
-    { name: 'Black', value: '#000000' },
-    { name: 'Blue', value: '#0066FF' },
-    { name: 'Red', value: '#FF0000' },
-    { name: 'Green', value: '#00CC00' },
-  ];
+  const [qrCodeUrl, setQrCodeUrl] = useState('');
+  const [isGenerating, setIsGenerating] = useState(false);
 
   // PLACEHOLDER FUNCTION - Replace with actual QR generation API
-  const handleGenerate = (e: React.FormEvent) => {
+  const handleGenerate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     if (!url) {
       toast.error('Please enter a URL');
       return;
     }
 
-    // TODO: API call to /api/qrcode/generate
-    console.log('Generating QR code for:', { url, color: selectedColor });
-    setQrGenerated(true);
-    toast.success('QR Code generated!');
+    setIsGenerating(true);
+
+    // Simulated API call delay
+    setTimeout(() => {
+      // PLACEHOLDER: Generate mock QR code URL
+      setQrCodeUrl('https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + encodeURIComponent(url));
+      setIsGenerating(false);
+      toast.success('QR code generated successfully!');
+    }, 1000);
   };
 
   // PLACEHOLDER FUNCTION - Replace with actual download API
   const handleDownload = () => {
-    // TODO: API call to /api/qrcode/download
-    console.log('Downloading QR code');
-    toast.success('QR Code downloaded!');
+    console.log('Downloading QR code:', qrCodeUrl);
+    toast.success('Download started!');
   };
 
   return (
-    <div className="bg-white rounded-2xl p-8 border border-neutral-200">
-      <h3 className="text-2xl text-neutral-900 mb-6">QR Code Generator</h3>
-      
+    <div className="w-full max-w-2xl mx-auto">
       <form onSubmit={handleGenerate} className="space-y-6">
-        <div>
-          <label className="text-sm text-neutral-700 mb-2 block">
-            Enter URL for QR Code
-          </label>
+        <div className="relative">
           <Input
             type="url"
             value={url}
             onChange={(e) => setUrl(e.target.value)}
-            placeholder="https://example.com"
-            className="bg-neutral-50 border-neutral-200"
+            placeholder="Enter URL to generate QR code..."
+            className="h-14 pr-32 bg-white border-neutral-200 text-lg"
+            disabled={isGenerating}
           />
+          <Button
+            type="submit"
+            disabled={isGenerating}
+            className="absolute right-2 top-2 bg-black hover:bg-neutral-800 text-white h-10"
+          >
+            {isGenerating ? (
+              'Generating...'
+            ) : (
+              <>
+                Generate
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </>
+            )}
+          </Button>
         </div>
 
-        <div>
-          <label className="text-sm text-neutral-700 mb-3 block">
-            <Palette className="w-4 h-4 inline mr-2" />
-            Choose Color
-          </label>
-          <div className="flex gap-3">
-            {colors.map((color) => (
-              <motion.button
-                key={color.value}
+        {qrCodeUrl && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-neutral-50 rounded-xl p-6 border border-neutral-200 text-center"
+          >
+            <div className="flex flex-col items-center gap-4">
+              <div className="w-48 h-48 bg-white rounded-xl flex items-center justify-center">
+                <img src={qrCodeUrl} alt="Generated QR Code" className="w-full h-full object-contain" />
+              </div>
+              <Button
                 type="button"
-                onClick={() => setSelectedColor(color.value)}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                className={`w-12 h-12 rounded-lg border-2 transition-all ${
-                  selectedColor === color.value
-                    ? 'border-black scale-110'
-                    : 'border-neutral-200'
-                }`}
-                style={{ backgroundColor: color.value }}
-              />
-            ))}
-          </div>
-        </div>
-
-        <Button 
-          type="submit" 
-          className="w-full bg-black hover:bg-neutral-800 text-white"
-        >
-          <QrCode className="w-4 h-4 mr-2" />
-          Generate QR Code
-        </Button>
-      </form>
-
-      {qrGenerated && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mt-8 pt-8 border-t border-neutral-200"
-        >
-          <div className="text-center">
-            <div 
-              className="w-64 h-64 mx-auto rounded-xl bg-neutral-50 flex items-center justify-center mb-6 border border-neutral-200"
-            >
-              {/* PLACEHOLDER - Replace with actual QR code image from API */}
-              <QrCode className="w-32 h-32" style={{ color: selectedColor }} />
+                onClick={handleDownload}
+                className="bg-black text-white hover:bg-neutral-800"
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Download QR Code
+              </Button>
+              <p className="text-sm text-neutral-500">
+                This is a demo. Connect your account to generate branded QR codes.
+              </p>
             </div>
-            
-            <p className="text-sm text-neutral-600 mb-4">
-              QR Code for: <span className="text-neutral-900">{url}</span>
-            </p>
-            
-            <Button
-              onClick={handleDownload}
-              variant="outline"
-              className="border-neutral-200"
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Download High Resolution
-            </Button>
-          </div>
-        </motion.div>
-      )}
-
-      <p className="text-xs text-neutral-500 mt-6 text-center">
-        {/* PLACEHOLDER: Add actual feature info */}
-        Try our QR code generator! Sign up to save and customize your codes.
-      </p>
+          </motion.div>
+        )}
+      </form>
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import type { User } from './auth.types';
+
 // Link Management Types
 export interface Link {
   _id: string;

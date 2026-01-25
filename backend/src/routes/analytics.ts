@@ -5,6 +5,14 @@ import { authMiddleware } from '../middleware/auth';
 
 const router = express.Router();
 
+type StatAccumulator = Record<string, number>;
+
+const incrementStat = (acc: StatAccumulator, key: string | undefined) => {
+  const safeKey = key && key.trim() !== '' ? key : 'unknown';
+  acc[safeKey] = (acc[safeKey] || 0) + 1;
+  return acc;
+};
+
 // Get analytics for a specific link
 router.get('/:linkId', authMiddleware, async (req, res) => {
   try {
@@ -31,22 +39,18 @@ router.get('/:linkId', authMiddleware, async (req, res) => {
 
     // Device stats
     const deviceStats = analytics.reduce((acc, a) => {
-      acc[a.device] = (acc[a.device] || 0) + 1;
-      return acc;
-    }, {} as { [key: string]: number });
+      return incrementStat(acc, a.device);
+    }, {} as StatAccumulator);
 
     // Browser stats
     const browserStats = analytics.reduce((acc, a) => {
-      acc[a.browser] = (acc[a.browser] || 0) + 1;
-      return acc;
-    }, {} as { [key: string]: number });
+      return incrementStat(acc, a.browser);
+    }, {} as StatAccumulator);
 
     // Location stats
     const locationStats = analytics.reduce((acc, a) => {
-      const country = a.country || 'Unknown';
-      acc[country] = (acc[country] || 0) + 1;
-      return acc;
-    }, {} as { [key: string]: number });
+      return incrementStat(acc, a.country);
+    }, {} as StatAccumulator);
 
     res.json({
       linkId: link._id,
@@ -92,4 +96,3 @@ router.get('/dashboard/stats', authMiddleware, async (req, res) => {
 });
 
 export default router;
-

@@ -6,7 +6,7 @@ import { Textarea } from '../components/ui/textarea';
 import { Label } from '../components/ui/label';
 import { Mail, MapPin, Phone, Send } from 'lucide-react';
 import { useState } from 'react';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 export function Contact() {
   const [formData, setFormData] = useState({
@@ -17,12 +17,12 @@ export function Contact() {
   });
 
   // PLACEHOLDER FUNCTION - Connect to contact form API
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     // TODO: API call to /api/contact
     console.log('Submitting contact form:', formData);
-    
+
     toast.success('Message sent! We\'ll get back to you soon.');
     setFormData({ name: '', email: '', company: '', message: '' });
   };
@@ -51,7 +51,7 @@ export function Contact() {
 
             <ScrollReveal delay={0.2}>
               <p className="text-xl text-neutral-600 leading-relaxed">
-                Have questions? We'd love to hear from you. Send us a message and 
+                Have questions? We\'d love to hear from you. Send us a message and
                 we'll respond as soon as possible.
               </p>
             </ScrollReveal>
@@ -67,7 +67,7 @@ export function Contact() {
             <ScrollReveal>
               <div className="bg-neutral-50 rounded-2xl p-8 md:p-12 border border-neutral-200">
                 <h2 className="text-3xl text-neutral-900 mb-8">Send us a message</h2>
-                
+
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
                     <Label htmlFor="name">Name *</Label>

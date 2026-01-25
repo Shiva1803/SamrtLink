@@ -1,48 +1,14 @@
 import { motion } from 'motion/react';
 import { ScrollReveal } from '../components/ScrollReveal';
-import { Link2, BarChart3, Shield, Zap, QrCode, Users, Globe, Lock, TrendingUp, Smartphone, Code, Headphones, ArrowRight } from 'lucide-react';
+import { Globe, Lock, TrendingUp, Smartphone, Code, Headphones, ArrowRight } from 'lucide-react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import { LinkShortenerDemo } from '../components/LinkShortenerDemo';
 import { QRCodeDemo } from '../components/QRCodeDemo';
 import { Button } from '../components/ui/button';
+import { FEATURES } from '../data/marketing';
 
-const allFeatures = [
-  {
-    icon: Link2,
-    title: 'Smart URL Shortening',
-    description: 'Create branded short links that are memorable and professional. Customize every link to match your brand identity and boost recognition.',
-    details: 'Advanced link customization with custom slugs, branded domains, and bulk URL shortening capabilities.',
-  },
-  {
-    icon: BarChart3,
-    title: 'Advanced Analytics',
-    description: 'Track clicks, locations, devices, and referrers in real-time. Make data-driven decisions with comprehensive dashboards.',
-    details: 'Detailed insights including geographic data, device types, browser information, and referral sources.',
-  },
-  {
-    icon: QrCode,
-    title: 'Dynamic QR Codes',
-    description: 'Generate scannable QR codes for your links. Perfect for print materials, packaging, and offline campaigns.',
-    details: 'Customizable QR codes with logo embedding, color schemes, and high-resolution exports.',
-  },
-  {
-    icon: Shield,
-    title: 'Enterprise Security',
-    description: 'Bank-level encryption and spam protection. Your links and data are always safe and secure.',
-    details: 'SSL certificates, malware scanning, password protection, and link expiration settings.',
-  },
-  {
-    icon: Zap,
-    title: 'Lightning Fast',
-    description: 'Global CDN ensures instant redirects anywhere in the world. Your audience never waits.',
-    details: '99.99% uptime SLA with servers in 20+ locations worldwide for optimal performance.',
-  },
-  {
-    icon: Users,
-    title: 'Team Collaboration',
-    description: 'Invite team members, set permissions, and work together seamlessly on link campaigns.',
-    details: 'Role-based access control, team workspaces, and collaborative link management.',
-  },
+const extendedFeatures = [
+  ...FEATURES,
   {
     icon: Globe,
     title: 'Custom Domains',
@@ -112,7 +78,7 @@ export function FeaturesPage() {
 
             <ScrollReveal delay={0.2}>
               <p className="text-xl text-neutral-600 leading-relaxed max-w-3xl mx-auto">
-                Powerful features designed for modern teams. From basic link shortening 
+                Powerful features designed for modern teams. From basic link shortening
                 to advanced analytics and team collaboration—we've got you covered.
               </p>
             </ScrollReveal>
@@ -124,7 +90,7 @@ export function FeaturesPage() {
       <section className="py-24 bg-neutral-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {allFeatures.map((feature, index) => (
+            {extendedFeatures.map((feature, index) => (
               <ScrollReveal key={feature.title} delay={index * 0.05}>
                 <motion.div
                   className="bg-white rounded-2xl p-8 border border-neutral-200 h-full"
@@ -143,13 +109,15 @@ export function FeaturesPage() {
                     {feature.description}
                   </p>
 
-                  <p className="text-sm text-neutral-500 leading-relaxed mb-6">
-                    {feature.details}
-                  </p>
+                  {'details' in feature && (
+                    <p className="text-sm text-neutral-500 leading-relaxed mb-6">
+                      {feature.details}
+                    </p>
+                  )}
 
                   <motion.div whileHover={{ x: 5 }} className="mt-auto">
-                    <Button 
-                      variant="ghost" 
+                    <Button
+                      variant="ghost"
                       className="text-neutral-900 hover:text-black p-0 h-auto group"
                     >
                       Learn More
@@ -176,7 +144,7 @@ export function FeaturesPage() {
               </p>
             </div>
           </ScrollReveal>
-          
+
           <ScrollReveal delay={0.2}>
             <LinkShortenerDemo />
           </ScrollReveal>
@@ -196,7 +164,7 @@ export function FeaturesPage() {
               </p>
             </div>
           </ScrollReveal>
-          
+
           <ScrollReveal delay={0.2}>
             <QRCodeDemo />
           </ScrollReveal>
@@ -213,7 +181,7 @@ export function FeaturesPage() {
                   Real-time analytics that matter
                 </h2>
                 <p className="text-lg text-neutral-600 leading-relaxed mb-6">
-                  Get instant insights into every click. Track geographic data, device types, 
+                  Get instant insights into every click. Track geographic data, device types,
                   referral sources, and user behavior with our comprehensive analytics dashboard.
                 </p>
                 <ul className="space-y-3">
@@ -249,7 +217,7 @@ export function FeaturesPage() {
                   Collaborate with your team
                 </h2>
                 <p className="text-lg text-neutral-600 leading-relaxed mb-6">
-                  Invite team members, assign roles, and manage permissions. Work together 
+                  Invite team members, assign roles, and manage permissions. Work together
                   on campaigns with shared workspaces and collaborative tools.
                 </p>
                 <ul className="space-y-3">
